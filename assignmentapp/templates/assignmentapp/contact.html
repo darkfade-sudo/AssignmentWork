@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+  <style>
+    body { font-family: serif; text-align: center; }
+    .box {
+      width: 320px; margin: 0 auto; padding: 12px;
+      border: 1px solid #333; text-align: left;
+    }
+    .row { display: flex; align-items: center; margin: 14px 0; }
+    .row label { width: 110px; }
+    .row input[type=text], .row input[type=email] { width: 110px; }
+    input:required { border: 1px solid #cc0; }
+    fieldset { border: 1px solid #aaa; margin: 14px 0; }
+    textarea { width: 100%; box-sizing: border-box; }
+    .errorlist { color: red; margin: 0; padding: 0; list-style: none; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Contact Form</h1>
+  <p>Please enter your details:</p>
+
+  <div class="box">
+    <p>Required fields are marked with an asterisk.</p>
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="row"><label for="{{ form.first_name.id_for_label }}">*First name:</label>{{ form.first_name }}</div>
+      {{ form.first_name.errors }}
+
+      <div class="row"><label for="{{ form.last_name.id_for_label }}">*Last name:</label>{{ form.last_name }}</div>
+      {{ form.last_name.errors }}
+
+      <div class="row"><label for="{{ form.email.id_for_label }}">*Email:</label>{{ form.email }}</div>
+      {{ form.email.errors }}
+
+      <div class="row"><label>Tel:</label>{{ form.tel }}</div>
+      <div class="row"><label>Fax:</label>{{ form.fax }}</div>
+      <div class="row"><label>Mob:</label>{{ form.mob }}</div>
+
+      <div class="row"><label>*Date of Birth:</label>{{ form.dob }}</div>
+      {{ form.dob.errors }}
+
+      <fieldset>
+        <legend>Gender*</legend>
+        {% for radio in form.gender %}
+          <div>{{ radio.tag }} {{ radio.choice_label }}</div>
+        {% endfor %}
+      </fieldset>
+      {{ form.gender.errors }}
+
+      <p>Leave a comment:</p>
+      {{ form.comment }}
+
+      <p><button type="submit">Submit</button></p>
+    </form>
+  </div>
+</body>
+</html>
